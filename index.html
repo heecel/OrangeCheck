@@ -2,62 +2,116 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Учёт посещаемости - Клиентская часть</title>
+    <title>Система учёта посещаемости</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fdf6ec; margin: 0; padding: 0; }
-        .orange-header { background-color: #e67e22; color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
-        .main-container { padding: 30px; max-width: 900px; margin: auto; }
-        .filter-panel { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; gap: 20px; align-items: center; margin-bottom: 20px; }
-        .load-btn { background-color: #f39c12; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; }
-        table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; }
-        th { background-color: #f9f0e6; color: #8e44ad; padding: 15px; text-align: left; border-bottom: 2px solid #eee; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #fdf6ec; margin: 0; padding: 0; }
+        .header { background-color: #e67e22; color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .container { padding: 30px; max-width: 900px; margin: auto; }
+        .filters { background: white; padding: 20px; border-radius: 12px; display: flex; gap: 20px; align-items: center; margin-bottom: 20px; border: 1px solid #e0e0e0; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        th { background-color: #f9f0e6; color: #d35400; padding: 15px; text-align: left; }
         td { padding: 15px; border-bottom: 1px solid #eee; }
-        .status-icon { font-size: 20px; cursor: pointer; }
-        .btn-group { display: flex; justify-content: space-between; margin-top: 20px; }
-        .btn-save { background-color: #e67e22; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-size: 16px; }
-        .btn-all { background-color: #f39c12; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; }
+        
+        /* Стили для красивых переключателей */
+        .radio-group { display: flex; gap: 10px; }
+        input[type="radio"] { cursor: pointer; width: 18px; height: 18px; accent-color: #e67e22; }
+
+        .btn-all { background-color: white; color: #e67e22; border: 2px solid #e67e22; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-all:hover { background-color: #e67e22; color: white; }
+        .btn-save { background-color: #e67e22; color: white; border: none; padding: 12px 40px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        .btn-save:hover { background-color: #d35400; }
+        
+        .footer-btns { display: flex; justify-content: space-between; margin-top: 25px; align-items: center; }
     </style>
 </head>
 <body>
-    <div class="orange-header">
-        <div style="font-weight: bold;">♦ Учёт посещаемости</div>
-        <div>🔔 Преподаватель ▼ | 🔒 Выход</div>
+
+<div class="header">
+    <div style="font-size: 1.2em; font-weight: bold;">♦ Учёт посещаемости</div>
+    <div>🔔 Преподаватель ▼ | 🔒 Выход</div>
+</div>
+
+<div class="container">
+    <div class="filters">
+        <span>Группа: <b>ИС-21</b></span>
+        <span>Предмет: <b>Физика</b></span>
+        <span>Дата: <b>17.11.2023</b></span>
     </div>
 
-    <div class="main-container">
-        <div class="filter-panel">
-            <span>Группа: <b>ИС-21</b></span>
-            <span>Дата: <b>17.11.2023</b></span>
-            <span>Предмет: <b>Физика</b></span>
-            <button class="load-btn">Загрузить список</button>
-        </div>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>№</th> <th>Студент</th> <th>Присутствует</th> <th>Отсутствует</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td> <td>👤 Иван Иванов</td> <td><input type="radio" name="s1" checked> ✅</td> <td><input type="radio" name="s1"></td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>👤 Анна Петрова</td> <td><input type="radio" name="s2"></td> <td><input type="radio" name="s2" checked> ❌</td>
-                </tr>
-                <tr>
-                    <td>3</td> <td>👤 Алексей Смирнов</td> <td><input type="radio" name="s3" checked> ✅</td> <td><input type="radio" name="s3"></td>
-                </tr>
-                <tr>
-                    <td>4</td> <td>👤 Мария Соколова</td> <td><input type="radio" name="s4"></td> <td><input type="radio" name="s4" checked> ❌</td>
-                </tr>
+    <table>
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Студент</th>
+                <th>Присутствует (✅)</th>
+                <th>Отсутствует (❌)</th>
+            </tr>
+        </thead>
+        <tbody id="studentTable">
             </tbody>
-        </table>
+    </table>
 
-        <div class="btn-group">
-            <button class="btn-all">Отметить всех "Присутствует"</button>
-            <button class="btn-save" onclick="alert('Данные сохранены!')">Сохранить</button>
-        </div>
+    <div class="footer-btns">
+        <button class="btn-all" onclick="markAllPresent()">Отметить всех "Присутствует"</button>
+        <button class="btn-save" onclick="saveData()">Сохранить</button>
     </div>
+</div>
+
+<script>
+    // Наш список студентов (как в базе данных)
+    let students = [
+        { id: 1, name: "Иван Иванов", status: "present" },
+        { id: 2, name: "Анна Петрова", status: "absent" },
+        { id: 3, name: "Алексей Смирнов", status: "present" },
+        { id: 4, name: "Мария Соколова", status: "absent" }
+    ];
+
+    // Функция, которая рисует таблицу на экране
+    function renderTable() {
+        const tbody = document.getElementById('studentTable');
+        tbody.innerHTML = ""; // Очищаем таблицу перед перерисовкой
+
+        students.forEach((s, index) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>👤 ${s.name}</td>
+                    <td>
+                        <input type="radio" name="status-${s.id}" value="present" 
+                        ${s.status === 'present' ? 'checked' : ''} 
+                        onchange="updateStatus(${s.id}, 'present')">
+                    </td>
+                    <td>
+                        <input type="radio" name="status-${s.id}" value="absent" 
+                        ${s.status === 'absent' ? 'checked' : ''} 
+                        onchange="updateStatus(${s.id}, 'absent')">
+                    </td>
+                </tr>
+            `;
+        });
+    }
+// Когда нажимаем на кружочек — обновляем статус в памяти
+    function updateStatus(id, newStatus) {
+        const student = students.find(s => s.id === id);
+        if (student) student.status = newStatus;
+        console.log(`Обновлен статус для ID ${id}: ${newStatus}`);
+    }
+
+    // Кнопка "Отметить всех"
+    function markAllPresent() {
+        students.forEach(s => s.status = 'present');
+        renderTable(); // Перерисовываем таблицу, чтобы галочки перепрыгнули
+    }
+
+    // Кнопка "Сохранить"
+    function saveData() {
+        console.log("Отправка на сервер:", students);
+        alert("Успешно! Данные о посещаемости группы ИС-21 сохранены в базу данных.");
+    }
+
+    // Запускаем отрисовку таблицы при открытии сайта
+    renderTable();
+</script>
+
 </body>
 </html>
