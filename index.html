@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Учёт посещаемости - Клиентская часть</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fdf6ec; margin: 0; padding: 0; }
+        .orange-header { background-color: #e67e22; color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .main-container { padding: 30px; max-width: 900px; margin: auto; }
+        .filter-panel { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; gap: 20px; align-items: center; margin-bottom: 20px; }
+        .load-btn { background-color: #f39c12; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; }
+        th { background-color: #f9f0e6; color: #8e44ad; padding: 15px; text-align: left; border-bottom: 2px solid #eee; }
+        td { padding: 15px; border-bottom: 1px solid #eee; }
+        .status-icon { font-size: 20px; cursor: pointer; }
+        .btn-group { display: flex; justify-content: space-between; margin-top: 20px; }
+        .btn-save { background-color: #e67e22; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-size: 16px; }
+        .btn-all { background-color: #f39c12; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="orange-header">
+        <div style="font-weight: bold;">♦ Учёт посещаемости</div>
+        <div>🔔 Преподаватель ▼ | 🔒 Выход</div>
+    </div>
+
+    <div class="main-container">
+        <div class="filter-panel">
+            <span>Группа: <b>ИС-21</b></span>
+            <span>Дата: <b>17.11.2023</b></span>
+            <span>Предмет: <b>Физика</b></span>
+            <button class="load-btn">Загрузить список</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>№</th> <th>Студент</th> <th>Присутствует</th> <th>Отсутствует</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td> <td>👤 Иван Иванов</td> <td><input type="radio" name="s1" checked> ✅</td> <td><input type="radio" name="s1"></td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>👤 Анна Петрова</td> <td><input type="radio" name="s2"></td> <td><input type="radio" name="s2" checked> ❌</td>
+                </tr>
+                <tr>
+                    <td>3</td> <td>👤 Алексей Смирнов</td> <td><input type="radio" name="s3" checked> ✅</td> <td><input type="radio" name="s3"></td>
+                </tr>
+                <tr>
+                    <td>4</td> <td>👤 Мария Соколова</td> <td><input type="radio" name="s4"></td> <td><input type="radio" name="s4" checked> ❌</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="btn-group">
+            <button class="btn-all">Отметить всех "Присутствует"</button>
+            <button class="btn-save" onclick="alert('Данные сохранены!')">Сохранить</button>
+        </div>
+    </div>
+</body>
+</html>
